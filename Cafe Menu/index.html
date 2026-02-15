@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>فروشگاه آنلاین کافه 420 | سفارش آنلاین</title>
+  
+  <!-- استایل‌ها -->
+  <link href="Css/output.css" rel="stylesheet">
+  
+  <!-- فونت وزیرمتن -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-stone-900 overflow-hidden">
+
+  <!-- =========================================
+       لایه 1: پس‌زمینه (ویدیو + پترن)
+       z-index: 0
+  ========================================= -->
+  <div class="fixed inset-0 z-0 w-full h-full">
+    
+    <!-- ویدیو -->
+    <video autoplay loop muted playsinline class="absolute min-w-full min-h-full object-cover brightness-[0.4] scale-105">
+        <source src="Asset/landing-page/coffe.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
+    <!-- پترن نقطه‌ای (CSS Gradient) -->
+    <div class="absolute inset-0 opacity-20 pointer-events-none" 
+         style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 30px 30px;">
+    </div>
+  </div>
+
+
+  <!-- =========================================
+       لایه 2: المان‌های شناور (Floating Elements)
+       z-index: 10 (روی ویدیو، زیر کارت)
+  ========================================= -->
+  <div class="fixed inset-0 z-10 pointer-events-none overflow-hidden select-none">
+      
+      <!-- 1. دانه قهوه (بالا سمت راست) -->
+      <img src="https://cdn-icons-png.flaticon.com/512/751/751621.png" 
+           class="absolute top-[15%] right-[10%] w-23 md:w-32 opacity-40 animate-float blur-[2px] rotate-340"
+           alt="Coffee">
+
+      <!-- 2. برگ نعنا (پایین سمت چپ) -->
+      <img src="Asset/landing-page/mint-leaf.png" 
+           class="absolute bottom-[15%] left-[10%] w-24 md:w-36 opacity-30 animate-float-slow blur-[1px]"
+           alt="Mint Leaf">
+
+      <!-- 3. برگر (وسط سمت راست) -->
+      <img src="https://cdn-icons-png.flaticon.com/512/1857/1857924.png" 
+           class="absolute bottom-[20%] right-[5%] w-12 md:w-16 opacity-50 rotate-15 animate-float-fast delay-200"
+           alt="Burger">
+
+      <!-- 4. چوب دارچین (بالا سمت چپ) -->
+      <img src="https://cdn-icons-png.flaticon.com/512/1684/1684360.png" 
+           class="absolute top-20 left-[10%] w-16 md:w-24 opacity-30 animate-float delay-100 rotate-[30deg] blur-[1px]"
+           alt="Cinnamon">
+           
+  </div>
+
+
+  <!-- =========================================
+       لایه 3: محتوای اصلی (کارت شیشه‌ای)
+       z-index: 20 (روی همه چیز)
+  ========================================= -->
+  <div class="relative z-20 w-screen h-screen flex items-center justify-center p-4">
+    
+    <div class="glass-card animate-fade-up">
+        
+        <!-- لوگو -->
+        <div class="w-24 h-24 bg-amber-500/30 rounded-full flex items-center justify-center mb-4 border border-amber-500/30 shadow-[0_0_30px_rgba(245,158,11,0.15)] backdrop-blur-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 text-amber-400">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+            </svg>
+        </div>
+
+        <!-- متن‌ها -->
+        <div class="space-y-3">
+            <h1 class="text-4xl md:text-6xl font-black text-white tracking-tight drop-shadow-lg">
+               کافه 420
+            </h1>
+            <p class="text-stone-300 text-lg md:text-xl font-light">
+                جایی برای چشیدن طعم‌های واقعی
+            </p>
+        </div>
+
+        <!-- جدا کننده -->
+        <div class="w-2/3 h-px bg-gradient-to-r from-transparent via-stone-500 to-transparent my-4 opacity-50"></div>
+
+        <!-- دکمه ورود -->
+        <button id="enterBtn" class="btn group w-full md:w-auto min-w-[200px]">
+            <span class="font-bold">سفارش دهید</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="size-5 group-hover:-translate-x-1.5 transition-transform duration-300">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+            </svg>
+        </button>
+
+    </div>
+  </div>
+
+  <!-- فایل جاوااسکریپت خارجی -->
+  <script src="Js/script.js"></script>
+
+</body>
+</html>
