@@ -30,7 +30,7 @@
     
     /* تنظیمات پایه صفحه */
     body {
-        @apply font-sans antialiased bg-stone-950 text-stone-100 overflow-hidden m-0 p-0;
+        @apply font-sans antialiase overflow-hidden m-0 p-0;
     }
 
     /* وسط چین کردن */
@@ -133,3 +133,11 @@
     .delay-300 { animation-delay: 3s; }
     .delay-400 { animation-delay: 4s; }
 } 
+
+
+@layer utilities {
+    .force-rtl {
+        direction: rtl !important;
+        text-align: right !important;
+    }
+}

@@ -13,6 +13,6 @@
       }, 300);
 
       setTimeout(() => {
-        window.location.href = 'home.html'; 
+        window.location.href = './Html/home.html'; 
       }, 800);
     });
