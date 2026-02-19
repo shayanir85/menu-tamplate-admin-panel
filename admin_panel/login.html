@@ -99,12 +99,11 @@
                                 </div>
                                 <!-- /.box-header -->
                                 <!-- form start -->
-                                <form onsubmit="login()" role="form">
+                                <form onsubmit="login(); return false;" role="form">
                                     <div class="box-body">
                                         <div class="form-group">
                                             <label for="email">ایمیل</label>
-                                            <input type="email" class="form-control" id="email"
-                                                placeholder="ایمیل">
+                                            <input type="email" class="form-control" id="email" placeholder="ایمیل">
                                         </div>
                                         <div class="form-group">
                                             <label for="password">رمز عبور</label>
@@ -113,7 +112,7 @@
                                         </div>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox"> مرا به خاطر بسپار
+                                                <input onclick="togglePassword(this)" type="checkbox"> نمایش رمز
                                             </label>
                                         </div>
                                     </div>
@@ -333,6 +332,8 @@
         </div>
         <!-- ./wrapper -->
 
+        <!-- handling show password function -->
+        <script src="dist/js/passwordVisibility.js"></script>
         <!-- jQuery 3 -->
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
         <!-- jQuery UI 1.11.4 -->
@@ -370,8 +371,9 @@
         <script src="dist/js/pages/dashboard.js"></script>
         <!-- AdminLTE for demo purposes -->
         <script src="dist/js/demo.js"></script>
+        <!-- Axios from NPM -->
         <script src="node_modules/axios/dist/axios.min.js"></script>
-        <script src="dist/js/app.js"></script>
+        <script src="dist/js/ConnectAxios.js"></script>
 
     </body>
 

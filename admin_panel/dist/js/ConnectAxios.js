@@ -1,3 +1,9 @@
+      // import axios from '../node_modules/axios/dist/esm/axios.js';
+      
+      document.addEventListener('DOMContentLoaded', function() {
+      console.log('ConnectAxios.js loaded');
+      });
+
       const product_Name = document.getElementById('product_name');
       const product_price = document.getElementById('product_price');
       const Name = document.getElementById('name');
@@ -22,14 +28,13 @@
           password: password.value
         })
           .then(respond => {
-            console.log(respond);
+            console.log(respond.data);
           })
           .catch(error => {
             console.log(error);
           });
       }
-      function register(event){
-        event.preventDefault();
+      function register(){
         axios.post('http://127.0.0.1:8000/api/register', {
           name: Name.value,
           email: email.value,
