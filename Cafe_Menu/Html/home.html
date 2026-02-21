@@ -14,8 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
 </head>
 
-<!-- پس زمینه روشن و قابلیت اسکرول -->
-<body class="bg-stone-50 text-stone-800 font-sans overflow-y-auto">
+<body class="bg-stone-50 text-stone-800 font-[Vazirmatn] overflow-y-auto">
 
     <!-- ================= HEADER ================= -->
     <header class="bg-stone-50 shadow-md sticky top-0 z-30">
@@ -31,12 +30,12 @@
                 <span class="font-bold text-xl hidden md:block tracking-tight text-amber-400">کافی شاپ</span>
             </div>
 
-<!-- Search Bar -->
+            <!-- Search Bar -->
             <div class="flex-1 max-w-2xl relative">
                 <input autofocus dir="rtl" type="text" 
                        oninput="handleSearch(this.value)" 
                        placeholder="جستجوی محصولات..." 
-                       class="w-full border border-stone-300 bg-white text-stone-800 rounded-xl py-3 pl-4 pr-12 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none placeholder-stone-400 transition-all text-right force-rtl shadow-sm">
+                       class="w-full border border-stone-300 bg-white text-stone-800 rounded-xl py-3 pl-4 pr-12 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none placeholder-stone-400 transition-all text-right shadow-sm">
 
                 <!-- آیکون سرچ -->
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-stone-400 absolute top-3.5 right-3 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -46,10 +45,12 @@
 
             <!-- Cart Button -->
             <div class="flex items-center gap-3">
+                <a href="checkout.html" class="relative">
                 <button onclick="toggleCart()" class="relative bg-amber-500 text-stone-900 p-3 rounded-xl hover:bg-amber-400 transition shadow-lg shadow-amber-500/20 cursor-pointer group">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:scale-110 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
                     <span id="cart-count" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold w-6 h-6 rounded-full hidden items-center justify-center border-2 border-stone-900">0</span>
                 </button>
+            </a>
             </div>
         </div>
     </header>
@@ -86,6 +87,10 @@
             </div>
         </aside>
 
+            <!-- ================= CART SIDEBAR ================= -->
+            <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-4"></div>
+
+
         <!-- Product List -->
         <div class="w-full lg:w-3/4">
             <!-- Grid Container -->
@@ -98,169 +103,7 @@
         </div>
     </main>
 
-    <!-- ================= CART SIDEBAR ================= -->
-    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-stone-900/70 z-40 hidden transition-opacity backdrop-blur-sm"></div>
-    <aside id="cart-sidebar" class="fixed top-0 bottom-0 left-0 w-full sm:w-96 bg-white shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 flex flex-col font-sans">
-        <div class="p-5 border-b border-stone-100 bg-stone-50 flex justify-between items-center">
-            <h3 class="font-bold text-lg text-stone-900">سبد خرید</h3>
-            <button onclick="toggleCart()" class="bg-white p-2 rounded-full hover:bg-red-50 text-stone-400 hover:text-red-500 transition cursor-pointer">✕</button>
-        </div>
-        <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-4"></div>
-        <div class="p-5 border-t border-stone-100 bg-white">
-            <div class="flex justify-between mb-4 text-xl font-bold text-stone-900"><span>مبلغ کل:</span><span id="cart-total">0 تومان</span></div>
-            <button onclick="alert('سفارش شما با موفقیت ثبت شد!')" class="w-full bg-amber-500 hover:bg-amber-400 text-stone-900 py-4 rounded-xl font-bold transition cursor-pointer shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2">
-                <span>تکمیل سفارش</span>
-                <!-- اصلاح شد: w-5 h-5 جایگزین size-5 شد -->
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                  </svg>
-            </button>
-        </div>
-    </aside>
-
     <!-- ================= JAVASCRIPT ================= -->
-    <script>
-        // 1. لیست محصولات
-        const products = [
-            { id: 1, name: "اسپرسو دبل", price: 45000, cat: "hot", img: "https://images.unsplash.com/photo-1570968992193-6e584a94764e?w=400&q=80", desc: "۱۰۰٪ عربیکا" },
-            { id: 2, name: "کاپوچینو", price: 65000, cat: "hot", img: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&q=80", desc: "شیر گرم و فوم" },
-            { id: 3, name: "آیس لته", price: 70000, cat: "cold", img: "https://images.unsplash.com/photo-1461023058943-716d1629796e?w=400&q=80", desc: "خنک و دلچسب" },
-            { id: 4, name: "کیک شکلاتی", price: 85000, cat: "cake", img: "https://images.unsplash.com/photo-1576618148400-f54bed99fcf8?w=400&q=80", desc: "شکلات بلژیکی" },
-            { id: 5, name: "قهوه ترک", price: 40000, cat: "hot", img: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?w=400&q=80", desc: "سنتی و غلیظ" },
-            { id: 6, name: "موکا سرد", price: 75000, cat: "cold", img: "https://images.unsplash.com/photo-1517701604599-bb29b5c73553?w=400&q=80", desc: "شکلات و اسپرسو" },
-            { id: 7, name: "تیرامیسو", price: 95000, cat: "cake", img: "https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=400&q=80", desc: "کلاسیک ایتالیایی" },
-            { id: 8, name: "لاته کارامل", price: 68000, cat: "hot", img: "https://images.unsplash.com/photo-1599398054066-846f28917f38?w=400&q=80", desc: "سیروپ کارامل" },
-        ];
-
-        let cart = [];
-
-        // 2. نمایش محصولات
-        function renderProducts(list) {
-            const container = document.getElementById('products-container');
-            container.innerHTML = '';
-            
-            if(list.length === 0) {
-                document.getElementById('no-result').classList.remove('hidden');
-                document.getElementById('no-result').classList.add('flex');
-            } else {
-                document.getElementById('no-result').classList.add('hidden');
-                document.getElementById('no-result').classList.remove('flex');
-            }
-
-            list.forEach(p => {
-                container.innerHTML += `
-                <div class="bg-white rounded-2xl p-3 border border-stone-100 shadow-sm hover:shadow-xl transition group flex flex-col">
-                    <div class="relative bg-stone-100 rounded-xl overflow-hidden h-48 mb-3">
-                        <img src="${p.img}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-bold text-stone-800 mb-1">${p.name}</h3>
-                        <p class="text-xs text-stone-500 line-clamp-2 mb-3">${p.desc}</p>
-                    </div>
-                    <div class="mt-auto pt-3 border-t border-stone-100">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-lg font-bold text-stone-900">${p.price.toLocaleString()}</span>
-                            <span class="text-xs text-stone-500">تومان</span>
-                        </div>
-                        <button onclick="addToCart(${p.id})" class="w-full bg-stone-900 text-white font-bold py-2.5 rounded-xl hover:bg-amber-500 hover:text-stone-900 transition flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-stone-900/10">
-                            افزودن
-                        </button>
-                    </div>
-                </div>`;
-            });
-        }
-
-        // 3. فیلتر و جستجو
-        function filterCategory(cat) {
-            if (cat === 'all') renderProducts(products);
-            else renderProducts(products.filter(p => p.cat === cat));
-        }
-
-        function handleSearch(query) {
-            const filtered = products.filter(p => p.name.includes(query) || p.desc.includes(query));
-            renderProducts(filtered);
-        }
-
-        function updateCounts() {
-            document.getElementById('count-all').innerText = products.length;
-            document.getElementById('count-hot').innerText = products.filter(p => p.cat === 'hot').length;
-            document.getElementById('count-cold').innerText = products.filter(p => p.cat === 'cold').length;
-            document.getElementById('count-cake').innerText = products.filter(p => p.cat === 'cake').length;
-        }
-
-        // 4. سبد خرید
-        function addToCart(id) {
-            const product = products.find(p => p.id === id);
-            const exist = cart.find(c => c.id === id);
-            if (exist) exist.qty++;
-            else cart.push({ ...product, qty: 1 });
-            updateCartUI();
-            
-            // باز شدن سایدبار اگر بسته است
-            const sidebar = document.getElementById('cart-sidebar');
-            if (sidebar.classList.contains('-translate-x-full')) toggleCart();
-        }
-
-        function updateCartUI() {
-            const container = document.getElementById('cart-items');
-            container.innerHTML = '';
-            let total = 0;
-            let count = 0;
-
-            cart.forEach(item => {
-                total += item.price * item.qty;
-                count += item.qty;
-                container.innerHTML += `
-                    <div class="flex gap-3 bg-white border border-stone-100 p-2 rounded-xl shadow-sm animate-slide-in">
-                        <img src="${item.img}" class="w-16 h-16 rounded-lg object-cover">
-                        <div class="flex-1 flex flex-col justify-between">
-                            <h4 class="text-sm font-bold text-stone-800">${item.name}</h4>
-                            <div class="flex justify-between items-center mt-2">
-                                <span class="text-amber-600 text-sm font-bold">${(item.price * item.qty).toLocaleString()}</span>
-                                <div class="flex items-center gap-2 bg-stone-50 rounded-lg px-2 border border-stone-200">
-                                    <button onclick="changeQty(${item.id}, 1)" class="text-green-600 font-bold px-1">+</button>
-                                    <span class="text-sm font-bold w-4 text-center">${item.qty}</span>
-                                    <button onclick="changeQty(${item.id}, -1)" class="text-red-500 font-bold px-1">-</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>`;
-            });
-
-            document.getElementById('cart-total').innerText = total.toLocaleString() + ' تومان';
-            
-            const badge = document.getElementById('cart-count');
-            badge.innerText = count;
-            if(count > 0) { badge.classList.remove('hidden'); badge.classList.add('flex'); }
-            else { badge.classList.add('hidden'); badge.classList.remove('flex'); }
-            
-            if(cart.length === 0) container.innerHTML = '<p class="text-center text-stone-400 mt-10">سبد خالی است</p>';
-        }
-
-        function changeQty(id, amount) {
-            const item = cart.find(c => c.id === id);
-            item.qty += amount;
-            if (item.qty <= 0) cart = cart.filter(c => c.id !== id);
-            updateCartUI();
-        }
-
-        function toggleCart() {
-            const sidebar = document.getElementById('cart-sidebar');
-            const overlay = document.getElementById('cart-overlay');
-            if (sidebar.classList.contains('-translate-x-full')) {
-                sidebar.classList.remove('-translate-x-full'); sidebar.classList.add('translate-x-0');
-                overlay.classList.remove('hidden'); setTimeout(()=>overlay.classList.remove('opacity-0'),10);
-            } else {
-                sidebar.classList.remove('translate-x-0'); sidebar.classList.add('-translate-x-full');
-                overlay.classList.add('opacity-0'); setTimeout(()=>overlay.classList.add('hidden'),300);
-            }
-        }
-
-        // شروع برنامه
-        window.onload = function() {
-            renderProducts(products);
-            updateCounts();
-        };
-    </script>
+    <script src="../js/script.js"></script>
 </body>
 </html>
