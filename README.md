@@ -1,4 +1,4 @@
-<h1 align="center">🍽️ Dynamic Restaurant/Cafe Menu System</h1>
+<h1 align="center">🍽️ Dynamic Restaurant/Café Menu System</h1>
 
 <p align="center">
   <b>A modern, customizable digital menu system for restaurants, cafés, and food businesses.</b>
