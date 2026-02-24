@@ -1,62 +1,23 @@
 <?php
 
-use App\Models\Product;
-use App\Models\User;
-use Illuminate\Http\Request;
-use  Laravel\Sanctum\Sanctum;
-use Illuminate\Support\Facades\Auth;
+
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+
+// User Authentication Routes
+Route::post('/login', [UserController::class,'login'])->middleware('throttle:5,3'); // User login endpoint
+Route::post('/register', [UserController::class,'register'])->middleware('throttle:5,3'); // User registration endpoint
 
 
-Route::post('/products', function (Request $request) {
-    $product = new Product();
-    $product->name = $request->name;
-    $product->price = $request->price;
-    $product->save();
-});
-Route::post('/register', function (Request $request) {
-    $user = new User();
-    $user->name = $request->name;
-    $user->email = $request->email;
-    $user->password = $request->password;
-    if($user->save()){
-        if(Auth::attempt($request->only('email','password'))){
-               $token = $user->createToken('auth-token')->plainTextToken;
-                return response()->json([
-                    'success' => true,
-                    'token' => $token,
-                    'user_data' => $user->email
-                ]);
-        }
-    }
-    return response()->json(['message' => 'failed'],401);
-});
-Route::post('/login', function (Request $request) {
-     $validated_data = $request->validate([
-        'email'=> 'required|email',
-        'password'=> 'required',
-     ]);
-    if (Auth::attempt($validated_data)) {
-        $user = Auth::user();
-        $token = $user->createToken('auth-token')->plainTextToken;
-        
-        return response()->json([
-            'success' => true,
-            'token' => $token,
-            'user_email' => $user->email
-        ]);
-    }    
-    
-    return response()->json([
-        'success' => false,
-        'message' => 'ایمیل یا رمز عبور اشتباه است'
-    ], 401);
+// Product Routes
+Route::get('/products', [ProductController::class]); // Get all products
+Route::put('/products/{id}', [ProductController::class]); // Update a specific product by ID
+Route::get('/products/{id}/edit', [ProductController::class]); // Get product data for editing
+Route::delete('/products/{id}', [ProductController::class]); // Delete a specific product by ID
+Route::post('/products', [ProductController::class])->middleware('throttle:5,3'); // Create a new product
 
-})->middleware('throttle:5,1');
-Route::get('/products', function () {
-    return response()->json([product::all()]);
-});
+
+// Protected Routes (requires authentication)
+// Route::middleware('auth:sanctum')->group(function () {});

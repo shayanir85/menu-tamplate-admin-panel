@@ -420,92 +420,127 @@ desired effect
             <!-- /.box-body -->
           </div>
         </form>
-        <!-- /.content -->
-      </div>
-      <!-- /.content-wrapper -->
-
-      <!-- Main Footer -->
-      <footer class="main-footer text-left">
-        <strong>Copyleft &copy; 2014-2017 <a href="https://adminlte.io">Almsaeed Studio</a> & <a
-            href="http://hosseinizadeh.ir/adminlte">Alireza Hosseinizadeh</a></strong>
-      </footer>
-
-      <!-- Control Sidebar -->
-      <aside class="control-sidebar control-sidebar-dark">
-        <!-- Create the tabs -->
-        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-          <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-          <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-        </ul>
-        <!-- Tab panes -->
-        <div class="tab-content">
-          <!-- Home tab content -->
-          <div class="tab-pane active" id="control-sidebar-home-tab">
-            <h3 class="control-sidebar-heading">فعالیت ها</h3>
-            <ul class="control-sidebar-menu">
-              <li>
-                <a href="javascript:;">
-                  <i class="menu-icon fa fa-birthday-cake bg-red"></i>
-
-                  <div class="menu-info">
-                    <h4 class="control-sidebar-subheading">تولد غلوم</h4>
-
-                    <p>۲۴ مرداد</p>
+        <!-- شروع لیست محصولات -->
+        <div class="content container-fluid">
+          <!-- باکس لیست محصولات -->
+          <div class="box box-primary" style="margin-top: 20px;">
+            <!-- هدر باکس شامل عنوان و فیلد جستجو -->
+            <div class="box-header">
+              <h3 class="box-title">لیست محصولات</h3>
+              <!-- بخش جستجو در گوشه سمت راست -->
+              <div class="box-tools">
+                <!-- فیلد ورودی جستجو -->
+                <div class="input-group input-group-sm" style="width: 150px;">
+                  <!-- اینپوت جستجو با شناسه product_search برای فیلتر کردن محصولات -->
+                  <input type="text" name="table_search" id="product_search" class="form-control pull-right"
+                    placeholder="جستجو">
+                  <!-- دکمه جستجو با آیکون -->
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                   </div>
-                </a>
-              </li>
-            </ul>
-            <!-- /.control-sidebar-menu -->
-
-            <h3 class="control-sidebar-heading">پیشرفت کارها</h3>
-            <ul class="control-sidebar-menu">
-              <li>
-                <a href="javascript:;">
-                  <h4 class="control-sidebar-subheading">
-                    آپدیت لاراول
-                    <span class="pull-left-container">
-                      <span class="label label-danger pull-left">70%</span>
-                    </span>
-                  </h4>
-
-                  <div class="progress progress-xxs">
-                    <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                  </div>
-                </a>
-              </li>
-            </ul>
-            <!-- /.control-sidebar-menu -->
-
-          </div>
-          <!-- /.tab-pane -->
-          <!-- Stats tab content -->
-          <div class="tab-pane" id="control-sidebar-stats-tab">تب وضعیت</div>
-          <!-- /.tab-pane -->
-          <!-- Settings tab content -->
-          <div class="tab-pane" id="control-sidebar-settings-tab">
-            <form method="post">
-              <h3 class="control-sidebar-heading">تنظیمات عمومی</h3>
-
-              <div class="form-group">
-                <label class="control-sidebar-subheading">
-                  گزارش کنترلر پنل
-                  <input type="checkbox" class="pull-left" checked>
-                </label>
-
-                <p>
-                  ثبت تمامی فعالیت های مدیران
-                </p>
+                </div>
               </div>
-              <!-- /.form-group -->
-            </form>
+            </div>
+            <!-- بدنه باکس با قابلیت اسکرول عمودی -->
+            <div class="box-body " id="products-list-container" style="max-height: 300px; overflow-y: auto;">
+              <!-- لیست محصولات -->
+
+            </div>
+            <!-- /.box-body -->
           </div>
-          <!-- /.tab-pane -->
+          <!-- پایان لیست محصولات -->
         </div>
-      </aside>
-      <!-- /.control-sidebar -->
-      <!-- Add the sidebar's background. This div must be placed
+      </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer text-left">
+      <strong>Copyleft &copy; 2014-2017 <a href="https://adminlte.io">Almsaeed Studio</a> & <a
+          href="http://hosseinizadeh.ir/adminlte">Alireza Hosseinizadeh</a></strong>
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Create the tabs -->
+      <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+        <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+        <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+      </ul>
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <!-- Home tab content -->
+        <div class="tab-pane active" id="control-sidebar-home-tab">
+          <h3 class="control-sidebar-heading">فعالیت ها</h3>
+          <ul class="control-sidebar-menu">
+            <li>
+              <a href="javascript:;">
+                <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+                <div class="menu-info">
+                  <h4 class="control-sidebar-subheading">تولد غلوم</h4>
+
+                  <p>۲۴ مرداد</p>
+                </div>
+              </a>
+            </li>
+          </ul>
+          <!-- /.control-sidebar-menu -->
+
+          <h3 class="control-sidebar-heading">پیشرفت کارها</h3>
+          <ul class="control-sidebar-menu">
+            <li>
+              <a href="javascript:;">
+                <h4 class="control-sidebar-subheading">
+                  آپدیت لاراول
+                  <span class="pull-left-container">
+                    <span class="label label-danger pull-left">70%</span>
+                  </span>
+                </h4>
+
+                <div class="progress progress-xxs">
+                  <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                </div>
+              </a>
+            </li>
+          </ul>
+          <!-- /.control-sidebar-menu -->
+
+        </div>
+        <!-- /.tab-pane -->
+        <!-- Stats tab content -->
+        <div class="tab-pane" id="control-sidebar-stats-tab">تب وضعیت</div>
+        <!-- /.tab-pane -->
+        <!-- Settings tab content -->
+        <div class="tab-pane" id="control-sidebar-settings-tab">
+          <form method="post">
+            <h3 class="control-sidebar-heading">تنظیمات عمومی</h3>
+
+            <div class="form-group">
+              <label class="control-sidebar-subheading">
+                گزارش کنترلر پنل
+                <input type="checkbox" class="pull-left" checked>
+              </label>
+
+              <p>
+                ثبت تمامی فعالیت های مدیران
+              </p>
+            </div>
+            <!-- /.form-group -->
+          </form>
+        </div>
+        <!-- /.tab-pane -->
+      </div>
+    </aside>
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
   immediately after the control sidebar -->
-      <div class="control-sidebar-bg"></div>
+    <div class="control-sidebar-bg"></div>
     </div>
     <!-- ./wrapper -->
 
@@ -520,6 +555,8 @@ desired effect
     <!-- Axios from NPM -->
     <script src="node_modules/axios/dist/axios.min.js"></script>
     <script src="dist/js/ConnectAxios.js"></script>
+    <!-- اسکریپت جستجوی محصولات -->
+    <script src="dist/js/productSearch.js"></script>
 
 
     <!-- Optionally, you can add Slimscroll and FastClick plugins.
