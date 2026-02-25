@@ -1,33 +1,38 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
+  <!-- ================= META & CONFIG ================= -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>فروشگاه آنلاین کافه 420 | سفارش آنلاین</title>
   
-  <!-- استایل‌ها -->
+  <!-- ================= STYLESHEETS ================= -->
+  <!-- Main Tailwind CSS output -->
   <link href="Css/output.css" rel="stylesheet">
   
-  <!-- فونت وزیرمتن -->
+  <!-- ================= FONTS ================= -->
+  <!-- Importing 'Vazirmatn' font from Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
 </head>
 
+<!-- Body: Dark background, overflow hidden to prevent scrolling on the landing page -->
 <body class="bg-stone-900 overflow-hidden">
 
   <!-- =========================================
-       لایه 1: پس‌زمینه (ویدیو + پترن)
+       LAYER 1: BACKGROUND (z-index: 0)
+       Contains the full-screen video and a texture overlay.
   ========================================= -->
   <div class="fixed inset-0 z-0 w-full h-full">
     
-    <!-- ویدیو -->
+    <!-- Background Video: Autoplay, Muted, Loop -->
     <video autoplay loop muted playsinline class="absolute min-w-full min-h-full object-cover brightness-[0.4] scale-105">
         <source src="Asset/landing-page/coffe.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
     
-    <!-- پترن نقطه‌ای (CSS Gradient) -->
+    <!-- Pattern Overlay: Adds a dot pattern to make text more readable over video -->
     <div class="absolute inset-0 opacity-20 pointer-events-none" 
          style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 30px 30px;">
     </div>
@@ -35,26 +40,28 @@
 
 
   <!-- =========================================
-       لایه 2: المان‌های شناور (Floating Elements) (روی ویدیو، زیر کارت)
+       LAYER 2: FLOATING ELEMENTS (z-index: 10)
+       Decorative icons (Coffee, Mint, etc.) positioned absolutely.
+       'pointer-events-none' ensures clicks pass through to the video or layers below.
   ========================================= -->
   <div class="fixed inset-0 z-10 pointer-events-none overflow-hidden select-none">
       
-      <!-- 1. دانه قهوه (بالا سمت راست) -->
+      <!-- Decoration 1: Coffee Bean (Top Right) -->
       <img src="https://cdn-icons-png.flaticon.com/512/751/751621.png" 
            class="absolute top-[15%] right-[10%] w-23 md:w-32 opacity-40 animate-float blur-[2px] rotate-340"
            alt="Coffee">
 
-      <!-- 2. برگ نعنا (پایین سمت چپ) -->
+      <!-- Decoration 2: Mint Leaf (Bottom Left) -->
       <img src="Asset/landing-page/mint-leaf.png" 
            class="absolute bottom-[15%] left-[10%] w-24 md:w-36 opacity-30 animate-float-slow blur-[1px]"
            alt="Mint Leaf">
 
-      <!-- 3. برگر (وسط سمت راست) -->
+      <!-- Decoration 3: Burger (Bottom Right) -->
       <img src="https://cdn-icons-png.flaticon.com/512/1857/1857924.png" 
            class="absolute bottom-[20%] right-[5%] w-12 md:w-16 opacity-50 rotate-15 animate-float-fast delay-200"
            alt="Burger">
 
-      <!-- 4. چوب دارچین (بالا سمت چپ) -->
+      <!-- Decoration 4: Cinnamon Stick (Top Left) -->
       <img src="https://cdn-icons-png.flaticon.com/512/1684/1684360.png" 
            class="absolute top-20 left-[10%] w-16 md:w-24 opacity-30 animate-float delay-100 rotate-[30deg] blur-[1px]"
            alt="Cinnamon">
@@ -63,20 +70,23 @@
 
 
   <!-- =========================================
-       لایه 3: محتوای اصلی (کارت شیشه‌ای) (روی همه چیز)
+       LAYER 3: MAIN CONTENT (z-index: 20)
+       The interactive glass card containing the logo and CTA.
   ========================================= -->
   <div class="relative z-20 w-screen h-screen flex items-center justify-center p-4">
     
+    <!-- Glassmorphism Card Container -->
     <div class="glass-card animate-fade-up">
         
-        <!-- لوگو -->
+        <!-- Brand Logo Wrapper -->
         <div class="w-24 h-24 bg-amber-500/30 rounded-full flex items-center justify-center mb-4 border border-amber-500/30 shadow-[0_0_30px_rgba(245,158,11,0.15)] backdrop-blur-sm">
+            <!-- SVG Icon -->
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 text-amber-400">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
             </svg>
         </div>
 
-        <!-- متن‌ها -->
+        <!-- Text Content -->
         <div class="space-y-3">
             <h1 class="text-4xl md:text-6xl font-black text-white tracking-tight drop-shadow-lg">
                کافه 420
@@ -86,12 +96,14 @@
             </p>
         </div>
 
-        <!-- جدا کننده -->
+        <!-- Divider Line -->
         <div class="w-2/3 h-px bg-gradient-to-r from-transparent via-stone-500 to-transparent my-4 opacity-50"></div>
 
-        <!-- دکمه ورود -->
+        <!-- Call to Action (CTA) Button -->
+        <!-- Logic for this button is handled in Js/script.js -->
         <button id="enterBtn" class="btn group w-full md:w-auto min-w-[200px]">
             <span class="font-bold">سفارش دهید</span>
+            <!-- Arrow Icon with hover animation -->
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="size-5 group-hover:-translate-x-1.5 transition-transform duration-300">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
             </svg>
@@ -100,7 +112,7 @@
     </div>
   </div>
 
-  <!-- فایل جاوااسکریپت خارجی -->
+  <!-- ================= SCRIPTS ================= -->
   <script src="./Js/script.js"></script>
 
 </body>

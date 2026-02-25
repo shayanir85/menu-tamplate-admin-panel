@@ -1,90 +1,108 @@
 @import "tailwindcss";
 
-/* ---------------------------------------------------------
-   2. یوتیلیتی‌های اختصاصی (Custom Utilities)
---------------------------------------------------------- */
+/* ==========================================================================
+   SECTION 1: CUSTOM UTILITIES
+   Extending Tailwind with specific project needs.
+   ========================================================================== */
+
 @utility container {
-    margin-inline: auto;
-    padding-inline: 1.5rem; 
+    margin-inline: auto; /* Centers container horizontally */
+    padding-inline: 1.5rem; /* Adds consistent left/right padding */
 }
 
-/* کلاس برای پترن نقطه‌ای پس‌زمینه (به جای عکس) */
+/* Background Pattern Utility: 
+   Creates a dotted grid using CSS gradients instead of loading an image file. */
 @utility bg-dot-pattern {
     background-image: radial-gradient(#ffffff 1px, transparent 1px);
-    background-size: 30px 30px; /* فاصله نقطه‌ها */
+    background-size: 30px 30px; /* Spacing between dots */
 }
 
-/* ---------------------------------------------------------
-   3. کامپوننت‌ها (Components Layer)
-   استایل‌های اصلی دکمه، کارت و بادی
---------------------------------------------------------- */
+/* ==========================================================================
+   SECTION 2: COMPONENT LAYER
+   Reusable UI components (Card, Button, Layouts)
+   ========================================================================== */
+
 @layer components {
     
-    /* تنظیمات پایه صفحه */
+    /* Global Body Settings */
     body {
-        @apply font-sans  overflow-hidden m-0 p-0;
+        @apply font-sans overflow-hidden m-0 p-0; /* 'overflow-hidden' prevents scrolling on the landing page */
     }
 
-    /* وسط چین کردن */
+    /* Helper for perfect centering */
     .centre {
         @apply flex items-center justify-center text-center mx-auto;
     }
 
-    /* --- استایل کارت شیشه‌ای (Glass Card) --- */
+    /* --- GLASSMORPHISM CARD ---
+       Creates a frosted-glass effect using background opacity and backdrop blur.
+    */
     .glass-card {
         @apply 
-            /* لی‌اوت و موقعیت */
+            /* Layout & Positioning */
             relative flex flex-col items-center justify-center text-center
             w-full max-w-md mx-4 p-8 md:p-12 gap-5
             
-            /* ظاهر شیشه‌ای */
-            bg-stone-900/60        /* رنگ مشکی با شفافیت 60 درصد */
-            backdrop-blur-xl       /* تاری زیاد پس‌زمینه */
-            border border-white/10 /* حاشیه نازک سفید و شفاف */
-            shadow-2xl             /* سایه عمیق */
-            rounded-[2.5rem];      /* گردی زیاد گوشه‌ها */
+            /* Visual Effects (The "Glass" Look) */
+            bg-stone-900/60        /* Dark background with 60% opacity */
+            backdrop-blur-xl       /* Heavy blur on elements behind the card */
+            border border-white/10 /* Thin, semi-transparent white border */
+            shadow-2xl             /* Deep shadow for depth */
+            rounded-[2.5rem];      /* Highly rounded corners */
     }
 
-    /* --- استایل دکمه (Button) --- */
+    /* --- PRIMARY CTA BUTTON --- 
+       Main action button with gradient and hover effects.
+    */
     .btn {
         @apply
-            /* لی‌اوت */
+            /* Layout */
             relative flex items-center justify-center gap-3
             w-full md:w-auto min-w-[200px]
             px-8 py-4
             
-            /* تایپوگرافی */
+            /* Typography */
             text-stone-900 font-bold text-xl tracking-tight
             
-            /* رنگ و ظاهر */
-            bg-gradient-to-r from-amber-400 to-amber-600
+            /* Appearance */
+            bg-gradient-to-r from-amber-400 to-amber-600 /* Golden Gradient */
             rounded-2xl
-            shadow-[0_0_20px_rgba(245,158,11,0.4)] /* سایه طلایی */
+            shadow-[0_0_20px_rgba(245,158,11,0.4)] /* Glowing shadow */
             cursor-pointer
             overflow-hidden
             
-            /* انیمیشن‌ها */
+            /* Interactions */
             transition-all duration-300 ease-out
-            hover:scale-105 hover:shadow-[0_0_35px_rgba(245,158,11,0.6)]
-            active:scale-95;
+            hover:scale-105 hover:shadow-[0_0_35px_rgba(245,158,11,0.6)] /* Grow & Glow on hover */
+            active:scale-95; /* Click press effect */
     }
 
-    /* افکت درخشش نوری که از روی دکمه رد میشه */
+    /* --- BUTTON SHINE EFFECT ---
+       A pseudo-element that slides across the button on hover.
+    */
     .btn::after {
         content: "";
         @apply absolute inset-0 bg-white/30 -translate-x-full skew-x-12 transition-transform duration-500 ease-out;
     }
     
-    /* وقتی موس رفت روی دکمه، نور حرکت کنه */
+    /* Trigger the shine animation on hover */
     .btn:hover::after {
         @apply translate-x-full;
     }
 
-    /* --- انیمیشن ورود (Fade Up) --- */
+
+    /* ==========================================================================
+       SECTION 3: ANIMATIONS
+       Keyframes and classes for motion effects.
+       ========================================================================== */
+
+    /* --- Entry Animation (Fade Up) --- 
+       Used for the main card appearing when page loads.
+    */
     .animate-fade-up {
         animation: fadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-        opacity: 0;
-        transform: translateY(30px);
+        opacity: 0; /* Start hidden */
+        transform: translateY(30px); /* Start slightly lower */
     }
 
     @keyframes fadeUp {
@@ -94,22 +112,24 @@
         }
     }
 
-        /* --- انیمیشن شناور (Floating Animation) --- */
+    /* --- Floating Animation --- 
+       Used for background elements (beans, leaves) to hover continuously.
+    */
     .animate-float {
         animation: float 6s ease-in-out infinite;
     }
 
-    /* انیمیشن کمی سریع‌تر برای تنوع */
+    /* Faster variation for visual variety */
     .animate-float-fast {
         animation: float 5s ease-in-out infinite;
     }
 
-    /* انیمیشن کمی کندتر */
+    /* Slower variation */
     .animate-float-slow {
         animation: float 8s ease-in-out infinite;
     }
 
-    /* کلیدهای انیمیشن: بالا پایین رفتن + کمی چرخش */
+    /* Keyframes: Moves element up/down and rotates slightly */
     @keyframes float {
         0%, 100% {
             transform: translateY(0) rotate(0deg);
@@ -119,7 +139,9 @@
         }
     }
 
-    /* کلاس‌های تاخیر برای اینکه همه با هم تکون نخورن */
+    /* Animation Delays
+       Ensures elements don't move in perfect sync (makes it look natural).
+    */
     .delay-100 { animation-delay: 1s; }
     .delay-200 { animation-delay: 2s; }
     .delay-300 { animation-delay: 3s; }
@@ -127,7 +149,12 @@
 } 
 
 
+/* ==========================================================================
+   SECTION 4: UTILITIES LAYER
+   ========================================================================== */
+
 @layer utilities {
+    /* Helper to force RTL layout for Persian text support */
     .force-rtl {
         direction: rtl !important;
         text-align: right !important;

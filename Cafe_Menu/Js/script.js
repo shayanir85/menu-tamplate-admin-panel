@@ -1,7 +1,9 @@
 /* ==========================================================================
-   بخش ۱: داده‌ها و تنظیمات اولیه (Data & Init)
+   SECTION 1: DATA SOURCE & STATE INITIALIZATION
    ========================================================================== */
 
+// Mock Database: Array of all available products
+// 'cat' refers to the category used for filtering (hot, cold, cake)
 const products = [
     { id: 1, name: "اسپرسو دبل", price: 45000, cat: "hot", img: "https://images.unsplash.com/photo-1570968992193-6e584a94764e?w=400&q=80", desc: "۱۰۰٪ عربیکا" },
     { id: 2, name: "کاپوچینو", price: 65000, cat: "hot", img: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&q=80", desc: "شیر گرم و فوم" },
@@ -14,21 +16,33 @@ const products = [
     { id: 9, name: "لته", price: 622000, cat: "hot", img: "https://images.unsplash.com/photo-1599398054066-846f28917f38?w=400&q=80", desc: "سیروپ کارامل" },
 ];
 
-// دریافت سبد خرید از حافظه مرورگر یا ایجاد آرایه خالی
-// این خط مهمترین بخش برای ارتباط بین صفحات است
+/**
+ * Cart State:
+ * Retrieves cart data from LocalStorage to persist data across page reloads.
+ * If no data exists, initializes an empty array [].
+ */
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+
 /* ==========================================================================
-   بخش ۲: توابع مدیریت سبد خرید (Logic)
+   SECTION 2: CART LOGIC (CRUD Operations)
    ========================================================================== */
 
-// ذخیره تغییرات در حافظه مرورگر و آپدیت کردن ظاهر سایت
+/**
+ * Saves the current cart array to Browser's LocalStorage
+ * and triggers a global UI update (badges, totals, etc).
+ */
 function saveCart() {
     localStorage.setItem('cart', JSON.stringify(cart));
     updateGlobalUI();
 }
 
-// افزودن محصول به سبد
+/**
+ * Adds a product to the cart.
+ * If product exists: Increment quantity (qty).
+ * If new: Add product object with qty = 1.
+ * @param {number} id - Product ID
+ */
 function addToCart(id) {
     const exist = cart.find(c => c.id === id);
     if (exist) {
@@ -40,44 +54,61 @@ function addToCart(id) {
     saveCart();
 }
 
-// تغییر تعداد
+/**
+ * Modifies the quantity of an item.
+ * Removes the item if quantity drops to 0 or less.
+ * @param {number} id - Product ID
+ * @param {number} amount - (+1 or -1)
+ */
 function changeQty(id, amount) {
     const item = cart.find(c => c.id === id);
     if (item) {
         item.qty += amount;
         if (item.qty <= 0) {
-            cart = cart.filter(c => c.id !== id);
+            cart = cart.filter(c => c.id !== id); // Remove item
         }
         saveCart();
     }
 }
 
-// حذف محصول
+/**
+ * Completely removes an item from the cart regardless of quantity.
+ */
 function removeFromCart(id) {
     cart = cart.filter(c => c.id !== id);
     saveCart();
 }
 
-// ثبت نهایی سفارش
+/**
+ * Finalizes the order.
+ * Clears the cart, saves empty state, and redirects to Home.
+ */
 function submitOrder() {
     if (cart.length === 0) return alert('سبد خرید شما خالی است!');
     
     alert('سفارش شما با موفقیت ثبت شد!\nاز خرید شما متشکریم.');
-    cart = []; // خالی کردن سبد
-    saveCart(); // ذخیره سبد خالی
-    window.location.href = 'Home.html'; // بازگشت به صفحه اصلی
+    cart = []; // Reset cart
+    saveCart(); // Sync with LocalStorage
+    window.location.href = 'Home.html'; // Redirect
 }
 
+
 /* ==========================================================================
-   بخش ۳: توابع بروزرسانی ظاهر (UI Updating)
+   SECTION 3: UI & DOM MANIPULATION
    ========================================================================== */
 
+/**
+ * Updates common UI elements across all pages (e.g., Cart Badge).
+ * Also re-renders the checkout list if the user is on the Checkout page.
+ */
 function updateGlobalUI() {
-    // 1. آپدیت بج قرمز روی آیکون سبد (در همه صفحات)
+    // 1. Update Cart Badge (Red circle on icon)
     const badge = document.getElementById('cart-count');
     if (badge) {
         const totalCount = cart.reduce((acc, item) => acc + item.qty, 0);
         badge.innerText = totalCount;
+        
+        // Toggle visibility based on count
         if (totalCount > 0) {
             badge.classList.remove('hidden');
             badge.classList.add('flex');
@@ -87,31 +118,36 @@ function updateGlobalUI() {
         }
     }
 
-    // 2. اگر در صفحه Checkout هستیم، لیست و قیمت‌ها را آپدیت کن
+    // 2. If we are on the Checkout Page, re-render the list
     if (document.getElementById('cart-page-items')) {
         renderCheckoutPage();
     }
-    
 }
 
+
 /* ==========================================================================
-   بخش ۴: رندر کردن صفحات (Render Functions)
+   SECTION 4: RENDER FUNCTIONS (Generating HTML)
    ========================================================================== */
 
-// رندر محصولات در صفحه اصلی
+/**
+ * Renders the product grid on the Home Page.
+ * @param {Array} list - Array of product objects to display
+ */
 function renderProducts(list) {
     const container = document.getElementById('products-container');
-    if (!container) return;
+    if (!container) return; // Exit if element doesn't exist (e.g., on Checkout page)
 
     container.innerHTML = '';
-    const noResult = document.getElementById('no-result');
     
+    // Handle "No Result" message
+    const noResult = document.getElementById('no-result');
     if(list.length === 0) {
         if(noResult) { noResult.classList.remove('hidden'); noResult.classList.add('flex'); }
     } else {
         if(noResult) { noResult.classList.add('hidden'); noResult.classList.remove('flex'); }
     }
 
+    // Generate HTML Cards
     list.forEach(p => {
         container.innerHTML += `
         <div class="bg-white rounded-2xl p-3 border border-stone-100 shadow-sm hover:shadow-xl transition group flex flex-col">
@@ -135,7 +171,10 @@ function renderProducts(list) {
     });
 }
 
-// رندر لیست خرید در صفحه Checkout
+/**
+ * Renders the list of selected items on the Checkout Page.
+ * Calculates total price and updates the summary.
+ */
 function renderCheckoutPage() {
     const container = document.getElementById('cart-page-items');
     if (!container) return;
@@ -143,6 +182,7 @@ function renderCheckoutPage() {
     container.innerHTML = '';
     let total = 0;
 
+    // Handle Empty Cart
     if (cart.length === 0) {
         container.innerHTML = `<p class="text-center text-stone-400 py-10">سبد خرید شما خالی است</p>`;
         document.getElementById('summary-total').innerText = "0 تومان";
@@ -150,6 +190,7 @@ function renderCheckoutPage() {
         return;
     }
 
+    // Generate List Rows
     cart.forEach(item => {
         total += item.price * item.qty;
         container.innerHTML += `
@@ -170,13 +211,14 @@ function renderCheckoutPage() {
         </div>`;
     });
 
-    // آپدیت قیمت کل و تعداد
+    // Update Summary Footer
     document.getElementById('summary-total').innerText = total.toLocaleString() + ' تومان';
     const totalCount = cart.reduce((acc, item) => acc + item.qty, 0);
     document.getElementById('cart-page-count').innerText = totalCount;
 }
 
-// توابع فیلتر و جستجو
+// --- Filtering & Searching ---
+
 function filterCategory(cat) {
     if (cat === 'all') renderProducts(products);
     else renderProducts(products.filter(p => p.cat === cat));
@@ -189,53 +231,56 @@ function handleSearch(query) {
 
 
 /* ==========================================================================
-   بخش ۵: شروع برنامه (Initialization)
+   SECTION 5: INITIALIZATION (DOMContentLoaded)
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', function() {
     
-    // همیشه UI را بر اساس دیتای localStorage آپدیت کن
+    // Always sync UI with stored cart data on page load
     updateGlobalUI();
 
-    // --- تشخیص صفحه: فروشگاه (home.html) ---
+    // --- CASE 1: HOME PAGE ---
     if (document.getElementById('products-container')) {
         renderProducts(products);
         
-        // آپدیت شمارنده‌های دسته‌بندی
+        // Update Sidebar Counts (Note: HTML IDs for counts need to be unique)
         const countAll = document.getElementById('count-all');
         if(countAll) {
             countAll.innerText = products.length;
             document.getElementById('count-hot').innerText = products.filter(p => p.cat === 'hot').length;
             document.getElementById('count-cold').innerText = products.filter(p => p.cat === 'cold').length;
-            // توجه: در HTML شما دو بار id="count-cake" استفاده شده بود (برای قهوه و چایی)، باید در HTML اصلاح شود
         }
         
-        // فوکوس
+        // Auto-focus search bar if present
         const searchInput = document.getElementById('search-input');
         if (searchInput) searchInput.focus();
     }
 
-    // --- تشخیص صفحه: سبد خرید (checkout.html) ---
+    // --- CASE 2: CHECKOUT PAGE ---
     if (document.getElementById('cart-page-items')) {
         renderCheckoutPage();
     }
 
-    // --- تشخیص صفحه: لندینگ (index.html) ---
+    // --- CASE 3: LANDING PAGE TRANSITION ---
+    // Handles the "Enter" button animation on the Landing page
     const enterBtn = document.getElementById('enterBtn');
     if (enterBtn) {
         enterBtn.addEventListener('click', function() {
             const body = document.body;
             const card = document.querySelector('.glass-card');
             
+            // 1. Animate card upwards and fade out
             if(card) {
                 card.style.transition = 'all 0.6s ease-in';
                 card.style.transform = 'translateY(50px)';
                 card.style.opacity = '0';
             }
+            // 2. Fade out body background
             setTimeout(() => {
                 body.style.transition = 'opacity 0.5s ease';
                 body.style.opacity = '0';
             }, 200);
+            // 3. Navigate to Home
             setTimeout(() => {
                 window.location.href = './Html/Home.html'; 
             }, 800);
@@ -244,25 +289,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
+// --- Navigation Helper ---
+function CheckoutPage() {
+    window.location.href = 'checkout.html';
+}
 
-    function CheckoutPage() {
-        window.location.href = 'checkout.html';
-    }
-
-
-    var cart_btn = document.getElementById('cart');
-    if (cart_btn) {
-        cart_btn.addEventListener('click', function() {
-            const body = document.body;
-            
-            setTimeout(() => {
-                body.style.transition = 'opacity 0.5s ease';
-                body.style.opacity = '0.5';
-            }, 300);
-            setTimeout(() => {
-                CheckoutPage();
-            }, 800);
-        });
-    }
-
-
+// --- Cart Button Transition Event ---
+var cart_btn = document.getElementById('cart');
+if (cart_btn) {
+    cart_btn.addEventListener('click', function() {
+        const body = document.body;
+        
+        // Fade effect before navigating to checkout
+        setTimeout(() => {
+            body.style.transition = 'opacity 0.5s ease';
+            body.style.opacity = '0.5';
+        }, 300);
+        setTimeout(() => {
+            CheckoutPage();
+        }, 800);
+    });
+}
