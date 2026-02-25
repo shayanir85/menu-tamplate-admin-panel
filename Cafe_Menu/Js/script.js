@@ -11,6 +11,7 @@ const products = [
     { id: 6, name: "موکا سرد", price: 75000, cat: "cold", img: "https://images.unsplash.com/photo-1517701604599-bb29b5c73553?w=400&q=80", desc: "شکلات و اسپرسو" },
     { id: 7, name: "تیرامیسو", price: 95000, cat: "cake", img: "https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=400&q=80", desc: "کلاسیک ایتالیایی" },
     { id: 8, name: "لاته کارامل", price: 68000, cat: "hot", img: "https://images.unsplash.com/photo-1599398054066-846f28917f38?w=400&q=80", desc: "سیروپ کارامل" },
+    { id: 9, name: "لته", price: 622000, cat: "hot", img: "https://images.unsplash.com/photo-1599398054066-846f28917f38?w=400&q=80", desc: "سیروپ کارامل" },
 ];
 
 // دریافت سبد خرید از حافظه مرورگر یا ایجاد آرایه خالی
@@ -37,15 +38,6 @@ function addToCart(id) {
         cart.push({ ...product, qty: 1 });
     }
     saveCart();
-    
-    // اگر در صفحه اصلی هستیم و سایدبار وجود دارد، آن را باز کن
-    const sidebar = document.getElementById('cart-sidebar'); // باید چک کنی توی HTML سایدبار کامل هست یا نه
-    if (sidebar && sidebar.classList.contains('-translate-x-full')) {
-         // کد باز کردن سایدبار (اگر سایدبار در HTML موجود باشد)
-         // چون در کد home.html شما سایدبار کامل نیست، این بخش ممکن است ارور ندهد اما کار هم نکند
-         // پیشنهاد: در home.html دکمه سبد را لینک کنید به checkout.html
-         window.location.href = 'checkout.html';
-    }
 }
 
 // تغییر تعداد
@@ -73,7 +65,7 @@ function submitOrder() {
     alert('سفارش شما با موفقیت ثبت شد!\nاز خرید شما متشکریم.');
     cart = []; // خالی کردن سبد
     saveCart(); // ذخیره سبد خالی
-    window.location.href = 'home.html'; // بازگشت به صفحه اصلی
+    window.location.href = 'Home.html'; // بازگشت به صفحه اصلی
 }
 
 /* ==========================================================================
@@ -100,9 +92,6 @@ function updateGlobalUI() {
         renderCheckoutPage();
     }
     
-    // 3. اگر در صفحه Home هستیم (و سایدبار داریم)
-    /* با توجه به کد home.html شما، سایدبار کامل نیست، پس اینجا کدی نمیذاریم
-       که باعث ارور نشه. تمرکز رو میذاریم روی صفحه checkout.html */
 }
 
 /* ==========================================================================
@@ -248,9 +237,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 body.style.opacity = '0';
             }, 200);
             setTimeout(() => {
-                window.location.href = 'home.html'; 
+                window.location.href = './Html/Home.html'; 
             }, 800);
         });
     }
 
 });
+
+
+    function CheckoutPage() {
+        window.location.href = 'checkout.html';
+    }
+
+
+    var cart_btn = document.getElementById('cart');
+    if (cart_btn) {
+        cart_btn.addEventListener('click', function() {
+            const body = document.body;
+            
+            setTimeout(() => {
+                body.style.transition = 'opacity 0.5s ease';
+                body.style.opacity = '0.5';
+            }, 300);
+            setTimeout(() => {
+                CheckoutPage();
+            }, 800);
+        });
+    }
+
+
