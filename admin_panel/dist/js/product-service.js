@@ -8,7 +8,7 @@
       const container = document.getElementById('products-list-container');
 
       document.addEventListener('DOMContentLoaded', function() {
-      console.log('ConnectAxios.js loaded');
+      console.log('product-service.js loaded');
       getProducts();
       });
 
@@ -17,8 +17,9 @@
           name: product_Name.value,
           price: product_price.value
         })
-          .then(respond => {
-            console.log(respond);
+          .then(response => {
+            console.log(response);
+            getProducts();
           })
           .catch(error => {
             console.log(error);
@@ -29,8 +30,8 @@
           email: email.value,
           password: password.value
         })
-          .then(respond => {
-            console.log(respond.data);
+          .then(response => {
+            console.log(response.data);
           })
           .catch(error => {
             console.log(error);
@@ -42,8 +43,9 @@
           email: email.value,
           password: password.value
         })
-          .then(respond => {
-            console.log(respond);
+          .then(response => {
+            console.log(response);
+            
           })
           .catch(error => {
             console.log(error);
@@ -51,10 +53,10 @@
       }
       function getProducts(){
           axios.get('http://127.0.0.1:8000/api/products')
-          .then(respond => {
+          .then(response => {
             
             
-            const items = respond.data;
+            const items = response.data;
             
 
             let html = ``;
@@ -73,6 +75,14 @@
                     <span class="product-description">
                     ${item.description}
                     </span>
+                    <div class="product-actions" style="margin-top: 10px;">
+                      <button class="btn btn-primary btn-xs" onclick="EditProduct(${item.id})">
+                        <i class="fa fa-edit"></i> ویرایش
+                      </button>
+                      <button class="btn btn-danger btn-xs" onclick="deleteProduct(${item.id})">
+                        <i class="fa fa-trash-o"></i> حذف
+                      </button>
+                    </div>
                   </div>
                 </li>
               ` ; 
@@ -84,4 +94,29 @@
           .catch(error => {
             console.log(error);
           });
+      }
+
+      function deleteProduct(id) {
+        if (confirm('آیا مطمئن هستید که می‌خواهید این محصول را حذف کنید؟')) {
+          axios.delete(`http://127.0.0.1:8000/api/products/${id}`)
+            .then(response => {
+              console.log(response);
+              getProducts();
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        }
+      }
+
+      function EditProduct(id) {
+          axios.put(`http://127.0.0.1:8000/api/products/${id}`)
+            .then(response => {
+              console.log(response);
+              getProducts();
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        
       }

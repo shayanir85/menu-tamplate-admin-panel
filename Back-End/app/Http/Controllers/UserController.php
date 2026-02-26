@@ -10,19 +10,18 @@ use Illuminate\Http\Request;
 use  Laravel\Sanctum\Sanctum;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 
 class UserController extends Controller
 {
        public function login(Request $request){
-            $validated_data = $request->validate([
+            $User_validated_data = $request->validate([
                 'email'=> 'required|email',
                 'password'=> 'required',
                 ]);
-                if (Auth::attempt($validated_data)) {
-                    Auth::login($validated_data);
-                    $user = User::where('email', $validated_data['email'])->first();
+                if (Auth::attempt($User_validated_data)) {
+                    $user = User::where('email', $User_validated_data['email'])->first();
                     $token = $user->createToken('auth-token')->plainTextToken;
                     return response()->json([
                         'success' => true,

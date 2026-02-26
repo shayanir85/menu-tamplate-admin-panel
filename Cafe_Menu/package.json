@@ -9,7 +9,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npx tailwindcss -i ./Css/input.css -o ./Css/output.css --watch"
   },
   "keywords": [],
   "author": "",
