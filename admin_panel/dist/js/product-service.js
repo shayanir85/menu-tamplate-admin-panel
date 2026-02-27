@@ -2,9 +2,6 @@
 
       const product_Name = document.getElementById('product_name');
       const product_price = document.getElementById('product_price');
-      const Name = document.getElementById('name');
-      const email = document.getElementById('email');
-      const password = document.getElementById('password');
       const container = document.getElementById('products-list-container');
 
       document.addEventListener('DOMContentLoaded', function() {
@@ -25,32 +22,7 @@
             console.log(error);
           });
       }
-      function login(){
-        axios.post('http://127.0.0.1:8000/api/login', {
-          email: email.value,
-          password: password.value
-        })
-          .then(response => {
-            console.log(response.data);
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      }
-      function register(){
-        axios.post('http://127.0.0.1:8000/api/register', {
-          name: Name.value,
-          email: email.value,
-          password: password.value
-        })
-          .then(response => {
-            console.log(response);
-            
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      }
+
       function getProducts(){
           axios.get('http://127.0.0.1:8000/api/products')
           .then(response => {
@@ -110,10 +82,11 @@
       }
 
       function EditProduct(id) {
-          axios.put(`http://127.0.0.1:8000/api/products/${id}`)
+          axios.put(`http://127.0.0.1:8000/api/products/${id}/edit`)
             .then(response => {
               console.log(response);
-              getProducts();
+              const link = 'http://127.0.0.1:5500/admin_panel/';
+              window.location.href = `${link}UpdateProduct.html`;
             })
             .catch(error => {
               console.log(error);
